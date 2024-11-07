@@ -22,7 +22,7 @@ let
     mapAttrsToList (k: v: ''hash -d ${k}="${v}"'') cfg.dirHashes
   );
 
-  zdotdir = "$HOME/" + lib.escapeShellArg cfg.dotDir;
+  zdotdir = cfg.dotDir;
 
   bindkeyCommands = {
     emacs = "bindkey -e";
@@ -306,11 +306,10 @@ in
 
       dotDir = mkOption {
         default = null;
-        example = ".config/zsh";
+        example = "$HOME/.config/zsh";
         description = ''
-          Directory where the zsh configuration and more should be located,
-          relative to the users home directory. The default is the home
-          directory.
+          Directory where the zsh configuration and more should be located.
+          The default is the home directory.
         '';
         type = types.nullOr types.str;
       };
