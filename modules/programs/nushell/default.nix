@@ -196,12 +196,21 @@ in {
       })
 
       (let
+        hmSessionVars = pkgs.runCommand "hm-session-vars.nu" { } ''
+          echo "if ('__HM_SESS_VARS_SOURCED' not-in \$env) {$(${
+            lib.getExe cfg.package
+          } -c "
+            source ${pkgs.callPackage ./capture-foreign-env.nix { }}
+            open ${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh | capture-foreign-env | to nuon
+          ") | load-env}" >> "$out"
+        '';
         hasEnvVars = cfg.environmentVariables != { };
         envVarsStr = ''
           load-env ${hm.nushell.toNushell { } cfg.environmentVariables}
         '';
       in mkIf (cfg.envFile != null || cfg.extraEnv != "" || hasEnvVars) {
         "${configDir}/env.nu".text = mkMerge [
+          "source ${hmSessionVars}"
           (mkIf (cfg.envFile != null) cfg.envFile.text)
           cfg.extraEnv
           envVarsStr

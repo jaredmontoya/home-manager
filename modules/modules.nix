@@ -182,7 +182,7 @@ let
     ./programs/nnn.nix
     ./programs/noti.nix
     ./programs/notmuch.nix
-    ./programs/nushell.nix
+    ./programs/nushell
     ./programs/obs-studio.nix
     ./programs/octant.nix
     ./programs/offlineimap.nix
