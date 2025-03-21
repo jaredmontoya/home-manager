@@ -12,11 +12,8 @@
     else
       "home-files/.config/nushell";
   in ''
-    assertFileExists "${configDir}/env.nu"
-    assertFileRegex "${configDir}/env.nu" \
-      '/nix/store/.*carapace.*/bin/carapace _carapace nushell \| save -f \$"(\$carapace_cache)/init\.nu"'
     assertFileExists "${configDir}/config.nu"
     assertFileRegex "${configDir}/config.nu" \
-      'source /.*/\.cache/carapace/init\.nu'
+      'source .*carapace-nushell-config'
   '';
 }

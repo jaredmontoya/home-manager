@@ -1,20 +1,14 @@
 { config, pkgs, lib, ... }:
 
-let
-
-  inherit (lib)
-    mkEnableOption mkPackageOption mkIf pipe fileContents splitString;
-  cfg = config.programs.carapace;
-  bin = cfg.package + "/bin/carapace";
-
+let cfg = config.programs.carapace;
 in {
   meta.maintainers = with lib.maintainers; [ weathercold bobvanderlinden ];
 
   options.programs.carapace = {
-    enable =
-      mkEnableOption "carapace, a multi-shell multi-command argument completer";
+    enable = lib.mkEnableOption
+      "carapace, a multi-shell multi-command argument completer";
 
-    package = mkPackageOption pkgs "carapace" { };
+    package = lib.mkPackageOption pkgs "carapace" { };
 
     enableBashIntegration =
       lib.hm.shell.mkBashIntegrationOption { inherit config; };
@@ -29,40 +23,35 @@ in {
       lib.hm.shell.mkZshIntegrationOption { inherit config; };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ];
 
     programs = {
-      bash.initExtra = mkIf cfg.enableBashIntegration ''
-        source <(${bin} _carapace bash)
+      bash.initExtra = lib.mkIf cfg.enableBashIntegration ''
+        source <(${lib.getExe cfg.package} _carapace bash)
       '';
 
-      zsh.initExtra = mkIf cfg.enableZshIntegration ''
-        source <(${bin} _carapace zsh)
+      zsh.initExtra = lib.mkIf cfg.enableZshIntegration ''
+        source <(${lib.getExe cfg.package} _carapace zsh)
       '';
 
-      fish.interactiveShellInit = mkIf cfg.enableFishIntegration ''
-        ${bin} _carapace fish | source
+      fish.interactiveShellInit = lib.mkIf cfg.enableFishIntegration ''
+        ${lib.getExe cfg.package} _carapace fish | source
       '';
 
-      nushell = mkIf cfg.enableNushellIntegration {
-        # Note, the ${"$"} below is a work-around because xgettext otherwise
-        # interpret it as a Bash i18n string.
-        extraEnv = ''
-          let carapace_cache = "${config.xdg.cacheHome}/carapace"
-          if not ($carapace_cache | path exists) {
-            mkdir $carapace_cache
-          }
-          ${bin} _carapace nushell | save -f ${"$"}"($carapace_cache)/init.nu"
-        '';
+      nushell = lib.mkIf cfg.enableNushellIntegration {
         extraConfig = ''
-          source ${config.xdg.cacheHome}/carapace/init.nu
+          source ${
+            pkgs.runCommand "carapace-nushell-config" { } ''
+              ${lib.getExe cfg.package} _carapace nushell >> "$out"
+            ''
+          }
         '';
       };
     };
 
     xdg.configFile =
-      mkIf (config.programs.fish.enable && cfg.enableFishIntegration) (
+      lib.mkIf (config.programs.fish.enable && cfg.enableFishIntegration) (
         # Convert the entries from `carapace --list` to empty
         # xdg.configFile."fish/completions/NAME.fish" entries.
         #
@@ -77,11 +66,11 @@ in {
           carapaceListFile = pkgs.runCommandLocal "carapace-list" {
             buildInputs = [ cfg.package ];
           } ''
-            ${bin} --list > $out
+            ${lib.getExe cfg.package} --list > $out
           '';
-        in pipe carapaceListFile [
-          fileContents
-          (splitString "\n")
+        in lib.pipe carapaceListFile [
+          lib.fileContents
+          (lib.splitString "\n")
           (map (builtins.match "^([a-z0-9-]+) .*"))
           (builtins.filter
             (match: match != null && (builtins.length match) > 0))
