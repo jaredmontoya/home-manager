@@ -25,14 +25,9 @@
       '@nix-your-shell@/bin/nix-your-shell fish | source'
 
     assertFileExists ${nushellConfigDir}/config.nu
-    assertFileContains \
+    assertFileRegex \
       ${nushellConfigDir}/config.nu \
-      'source ${config.xdg.cacheHome}/nix-your-shell/init.nu'
-
-    assertFileExists ${nushellConfigDir}/env.nu
-    assertFileContains \
-      ${nushellConfigDir}/env.nu \
-      '@nix-your-shell@/bin/nix-your-shell nu | save --force ${config.xdg.cacheHome}/nix-your-shell/init.nu'
+      'source .*nix-your-shell-nushell-config'
 
     assertFileExists home-files/.zshrc
     assertFileContains \
