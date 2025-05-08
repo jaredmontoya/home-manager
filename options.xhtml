@@ -28322,6 +28322,58 @@ attribute set of string</p>
 </dd>
 <dt>
  <span class="term">
+ <a id="opt-programs.git.patdiff.enable"></a><a class="term" href="options.xhtml#opt-programs.git.patdiff.enable"><code class="option">programs.git.patdiff.enable</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Whether to enable the <span class="command"><strong>patdiff</strong></span> differ.
+See <a class="link" href="https://opensource.janestreet.com/patdiff/"  target="_top">https://opensource.janestreet.com/patdiff/</a></p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+boolean</p>
+
+<p><span class="emphasis"><em>Default:</em></span>
+<code class="literal">false</code></p>
+
+<p><span class="emphasis"><em>Example:</em></span>
+<code class="literal">true</code></p>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/git.nix" target="_top">
+&lt;home-manager/modules/programs/git.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.git.patdiff.package"></a><a class="term" href="options.xhtml#opt-programs.git.patdiff.package"><code class="option">programs.git.patdiff.package</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>The patdiff package to use.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+package</p>
+
+<p><span class="emphasis"><em>Default:</em></span>
+<code class="literal">pkgs.patdiff</code></p>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/git.nix" target="_top">
+&lt;home-manager/modules/programs/git.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
  <a id="opt-programs.git.riff.enable"></a><a class="term" href="options.xhtml#opt-programs.git.riff.enable"><code class="option">programs.git.riff.enable</code>
   </a>
  </span>
@@ -51796,7 +51848,6 @@ null or boolean</p>
 <code class="literal">{ }</code></p>
 
 <p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting">{
-  modi = &quot;drun,emoji,ssh&quot;;
   kb-primary-paste = &quot;Control+V,Shift+Insert&quot;;
   kb-secondary-paste = &quot;Control+v,Insert&quot;;
 }
@@ -51874,6 +51925,42 @@ one of “bottom”, “bottom-left”, “bottom-right”, “center”, “lef
 
 <p><span class="emphasis"><em>Default:</em></span>
 <code class="literal">&quot;center&quot;</code></p>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/rofi.nix" target="_top">
+&lt;home-manager/modules/programs/rofi.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.rofi.modes"></a><a class="term" href="options.xhtml#opt-programs.rofi.modes"><code class="option">programs.rofi.modes</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Modes to enable. For custom modes see <code class="literal">man 5 rofi-script</code>.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+list of (string or (submodule))</p>
+
+<p><span class="emphasis"><em>Default:</em></span>
+<code class="literal">[ ]</code></p>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting">[
+  &quot;drun&quot;
+  &quot;emoji&quot;
+  &quot;ssh&quot;
+  {
+    name = &quot;whatnot&quot;;
+    path = lib.getExe pkgs.rofi-whatnot;
+  }
+]
+
+</code></pre>
 
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
@@ -58141,6 +58228,87 @@ boolean</p>
 
 <p><span class="emphasis"><em>Example:</em></span>
 <code class="literal">true</code></p>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/television.nix" target="_top">
+&lt;home-manager/modules/programs/television.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.television.enableBashIntegration"></a><a class="term" href="options.xhtml#opt-programs.television.enableBashIntegration"><code class="option">programs.television.enableBashIntegration</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Whether to enable Bash integration.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+boolean</p>
+
+<p><span class="emphasis"><em>Default:</em></span>
+<a class="xref" href="options.xhtml#opt-home.shell.enableBashIntegration"  ><code class="option">home.shell.enableBashIntegration</code></a></p>
+
+<p><span class="emphasis"><em>Example:</em></span>
+<code class="literal">false</code></p>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/television.nix" target="_top">
+&lt;home-manager/modules/programs/television.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.television.enableFishIntegration"></a><a class="term" href="options.xhtml#opt-programs.television.enableFishIntegration"><code class="option">programs.television.enableFishIntegration</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Whether to enable Fish integration.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+boolean</p>
+
+<p><span class="emphasis"><em>Default:</em></span>
+<a class="xref" href="options.xhtml#opt-home.shell.enableFishIntegration"  ><code class="option">home.shell.enableFishIntegration</code></a></p>
+
+<p><span class="emphasis"><em>Example:</em></span>
+<code class="literal">false</code></p>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/television.nix" target="_top">
+&lt;home-manager/modules/programs/television.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.television.enableZshIntegration"></a><a class="term" href="options.xhtml#opt-programs.television.enableZshIntegration"><code class="option">programs.television.enableZshIntegration</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Whether to enable Zsh integration.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+boolean</p>
+
+<p><span class="emphasis"><em>Default:</em></span>
+<a class="xref" href="options.xhtml#opt-home.shell.enableZshIntegration"  ><code class="option">home.shell.enableZshIntegration</code></a></p>
+
+<p><span class="emphasis"><em>Example:</em></span>
+<code class="literal">false</code></p>
 
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
@@ -79658,15 +79826,15 @@ attribute set of (INI atom (null, bool, int, float or string))</p>
   {
     actions = &quot;true&quot;;
     anchor = &quot;top-right&quot;;
-    backgroundColor = &quot;#000000&quot;;
-    borderColor = &quot;#FFFFFF&quot;;
-    borderRadius = &quot;0&quot;;
-    defaultTimeout = &quot;0&quot;;
+    background-color = &quot;#000000&quot;;
+    border-color = &quot;#FFFFFF&quot;;
+    border-radius = &quot;0&quot;;
+    default-timeout = &quot;0&quot;;
     font = &quot;monospace 10&quot;;
     height = &quot;100&quot;;
     width = &quot;300&quot;;
     icons = &quot;true&quot;;
-    ignoreTimeout = &quot;false&quot;;
+    ignore-timeout = &quot;false&quot;;
     layer = &quot;top&quot;;
     margin = &quot;10&quot;;
     markup = &quot;true&quot;;
