@@ -34,7 +34,12 @@ can be embedded using <code class="literal">lib.generators.mkLuaInline</code>. T
 <a class="xref" href="options.xhtml#opt-programs.wezterm.extraConfig"  ><code class="option">programs.wezterm.extraConfig</code></a> option remains fully supported
 and can be combined with <a class="xref" href="options.xhtml#opt-programs.wezterm.settings"  ><code class="option">programs.wezterm.settings</code></a>.</p></li><li class="listitem"><p>The <a class="xref" href="options.xhtml#opt-programs.anki.uiScale"  ><code class="option">programs.anki.uiScale</code></a> option now expects a value in the
 range 1.0–2.0, previously it erroneously expected values in the
-range <code class="literal">0.0–1.0</code>.</p></li></ul></div>
+range <code class="literal">0.0–1.0</code>.</p></li><li class="listitem"><p>New <a class="xref" href="options.xhtml#opt-home.services"  ><code class="option">home.services</code></a> namespace for nixpkgs
+<a class="link" href="https://nixos.org/manual/nixos/unstable/#modular-services"  target="_top">modular services</a>.
+Service modules shipped with packages (e.g.
+<code class="literal">pkgs.&lt;name&gt;.passthru.services.default</code>) drop in unchanged and are
+lifted to user systemd units. See
+<a class="link" href="index.xhtml#sec-usage-modular-services" title="Modular Services" >Modular Services</a> for details.</p></li></ul></div>
 </div><div class="section"> <div class="titlepage">  <div>   <div>    <h2 id="sec-release-26.05-state-version-changes" class="title" style="clear: both">State Version Changes   </h2>  </div> </div></div><p>The state version in this release includes the changes below. These
 changes are only active if the <code class="literal">home.stateVersion</code> option is set to
 &quot;26.05&quot; or later.</p><div class="itemizedlist"><ul class="itemizedlist " style="list-style-type: disc;"><li class="listitem"><p>The <a class="xref" href="options.xhtml#opt-gtk.gtk4.theme"  ><code class="option">gtk.gtk4.theme</code></a> option does not mirror
@@ -54,7 +59,11 @@ manual pages still work with macOS’s built-in <code class="literal">man</code>
 <a class="xref" href="options.xhtml#opt-home.extraOutputsToInstall"  ><code class="option">home.extraOutputsToInstall</code></a>.</p></li><li class="listitem"><p>The options <a class="xref" href="options.xhtml#opt-programs.neovim.withPython3"  ><code class="option">programs.neovim.withPython3</code></a> and
 <a class="xref" href="options.xhtml#opt-programs.neovim.withRuby"  ><code class="option">programs.neovim.withRuby</code></a> now default to <code class="literal">false</code> following nixpkgs</p></li><li class="listitem"><p>On Linux, <code class="literal">programs.firefox.configPath</code> now defaults to
 <code class="literal">&quot;${config.xdg.configHome}/mozilla/firefox&quot;</code> for <code class="literal">home.stateVersion = &quot;26.05&quot;</code> and later.
-Older state versions keep the legacy default of <code class="literal">&quot;.mozilla/firefox&quot;</code>.</p></li></ul></div>
+Older state versions keep the legacy default of <code class="literal">&quot;.mozilla/firefox&quot;</code>.</p></li><li class="listitem"><p>The <a class="xref" href="options.xhtml#opt-wayland.windowManager.hyprland.configType"  ><code class="option">wayland.windowManager.hyprland.configType</code></a> option now
+defaults to <code class="literal">&quot;lua&quot;</code> for <code class="literal">home.stateVersion = &quot;26.05&quot;</code> and later.
+Older state versions keep the legacy <code class="literal">&quot;hyprlang&quot;</code> default. Set
+<code class="literal">wayland.windowManager.hyprland.configType = &quot;hyprlang&quot;</code> to keep
+generating <code class="filename">$XDG_CONFIG_HOME/hypr/hyprland.conf</code>.</p></li></ul></div>
 </div>
 
 </div><div class="chapter"> <div class="titlepage">  <div>   <div>    <h2 id="sec-release-25.11" class="title" >Release 25.11   </h2>  </div> </div></div><div class="toc"> <p><strong>Table of Contents</strong></p> <dl class="toc">  <dt> <span class="section">  <a href="release-notes.xhtml#sec-release-25.11-highlights">Highlights</a> </span></dt><dt> <span class="section">  <a href="release-notes.xhtml#sec-release-25.11-state-version-changes">State Version Changes</a> </span></dt> </dl></div><p>The 25.11 release branch became stable in November, 2025.</p><div class="section"> <div class="titlepage">  <div>   <div>    <h2 id="sec-release-25.11-highlights" class="title" style="clear: both">Highlights   </h2>  </div> </div></div><p>This release has the following notable changes:</p><div class="itemizedlist"><ul class="itemizedlist " style="list-style-type: disc;"><li class="listitem"><p>Updating the <code class="literal">home-manager</code> Nix profile inside the activation script
@@ -561,7 +570,7 @@ assignment inside a <code class="literal">config</code> attribute. For example, 
 </code></pre></li><li class="listitem"><p>The <code class="literal">services.compton</code> module has been deprecated and instead the
 new module <code class="literal">services.picom</code> should be used. This is because Nixpkgs
 no longer packages compton, and instead packages the (mostly)
-compatible fork called picom.</p></li><li class="listitem"><p>The list form of the <a class="link" href="options.xhtml#opt-programs.ssh.matchBlocks"  >programs.ssh.matchBlocks</a> option has
+compatible fork called picom.</p></li><li class="listitem"><p>The list form of the <code class="literal">programs.ssh.matchBlocks</code> option has
 been deprecated and configurations requiring match blocks in a
 defined order should switch to using DAG entries instead. For
 example, a configuration</p><pre><code class="programlisting  nix">programs.ssh.matchBlocks = [
